@@ -14,7 +14,7 @@ BRS.writeSave("example_saves/OrangeCity.brs", brickadiaCity);
 add your own screenshot to a save
 ```Java
 SaveData brickadiaCity = BRS.readSave("example_saves/BrickadiaCityQA.brs");
-brickadiaCity.setScreenshot(new File("custom_screenshot.png"));
+brickadiaCity.setScreenshot(ImageIO.read(new File("custom_screenshot.png")));
 BRS.writeSave("example_saves/CustomScreenshot.brs", brickadiaCity);
 ```
 
