@@ -66,6 +66,6 @@ allprojects {
 ```
 ```
 dependencies {
-  implementation 'com.github.User:Repo:Tag'
+  implementation 'com.github.brickadia-community:brs-java:Tag'
 }
 ```
