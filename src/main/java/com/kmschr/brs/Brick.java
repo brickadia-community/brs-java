@@ -46,12 +46,20 @@ public class Brick {
         this.size = size;
     }
 
+    public void setSize(int x, int y, int z) {
+        this.size = new Vec3(x, y, z);
+    }
+
     public Vec3 getPosition() {
         return position;
     }
 
     public void setPosition(Vec3 position) {
         this.position = position;
+    }
+
+    public void setPosition(int x, int y, int z) {
+        this.position = new Vec3(x, y, z);
     }
 
     public Direction getDirection() {

@@ -7,7 +7,7 @@ public class Color extends ColorMode {
     }
 
     public Color(int r, int g, int b, int a) {
-        this((byte) r, (byte) g, (byte) b, (byte) a);
+        this((byte) convert(r), (byte) convert(g), (byte) convert(b), (byte) convert(a));
     }
 
     public Color(byte r, byte g, byte b, byte a) {
@@ -15,19 +15,30 @@ public class Color extends ColorMode {
     }
 
     public byte r() {
-        return (byte) (color >>> 16);
+        return (byte) ((color >>> 16) & 0xFF);
     }
 
     public byte g() {
-        return (byte) (color >>> 8);
+        return (byte) ((color >>> 8) & 0xFF);
     }
 
     public byte b() {
-        return (byte) color;
+        return (byte) (color & 0xFF);
     }
 
     public byte a() {
-        return (byte) (color >>> 24);
+        return (byte) ((color >>> 24) & 0xFF);
+    }
+
+    public void multiply(int factor) {
+        int r = r();
+        int g = g();
+        int b = b();
+        int a = a();
+        r = (int) ((double) r * ((double) factor / 255.0));
+        g = (int) ((double) g * ((double) factor / 255.0));
+        b = (int) ((double) b * ((double) factor / 255.0));
+        this.color = (b & 0xFF) | ((g & 0xFF) << 8) | ((r & 0xFF) << 16) | ((a & 0xFF) << 24);
     }
 
     @Override
@@ -42,6 +53,14 @@ public class Color extends ColorMode {
         if (!(o instanceof Color))
             return false;
         return this.color == ((Color) o).color;
+    }
+
+    private static int convert(int n) {
+        double u = ((double) n) / 255.0;
+        if (u <= 0.04045)
+            return (int) (((u * 25) / 323) * 255.0);
+        double p = (u + 0.055) / 1.055;
+        return (int) (Math.pow(p, 2.4) * 255.0);
     }
 
 }
