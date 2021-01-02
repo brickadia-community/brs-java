@@ -6,10 +6,7 @@ import net.querz.mca.MCAFile;
 import net.querz.nbt.tag.CompoundTag;
 import net.querz.nbt.tag.StringTag;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Block {
 
@@ -36,6 +33,18 @@ public class Block {
     Block(String blockType, CompoundTag properties) {
         this.blockType = blockType;
         this.properties = properties;
+    }
+
+    public String getProp(String propName) {
+        return ((StringTag) properties.get(propName)).getValue();
+    }
+
+    public CompoundTag getProps() {
+        return properties;
+    }
+
+    public String getBlockType() {
+        return blockType;
     }
 
     public Brick cube(int x, int z, int y, Color color) {
@@ -578,18 +587,8 @@ public class Block {
             case "minecraft:crafting_table":
                 bricks.add(cube(x, z, y, new Color(129, 106, 70, 255)));
                 break;
-            case "minecraft:coal_ore":
-                bricks.add(cube(x, z, y, new Color(116, 116, 116, 255)));
-                break;
-            case "minecraft:iron_ore":
-                bricks.add(cube(x, z, y, new Color(136, 131, 127, 255)));
-                break;
-            case "minecraft:gold_ore":
-                bricks.add(cube(x, z, y, new Color(144, 140, 125, 255)));
-                break;
-            case "minecraft:diamond_ore":
-                bricks.add(cube(x, z, y, new Color(125, 143, 141, 255)));
-                break;
+            case "minecraft:coal_ore", "minecraft:iron_ore", "minecraft:gold_ore", "minecraft:redstone_ore", "minecraft:diamond_ore", "minecraft:lapis_ore", "minecraft:emerald_ore":
+                return OreBuilder.build(x, z, y, this);
             case "minecraft:water":
                 Brick waterbrick = liquid(rx, rz, ry, new Color(63, 118, 228, 255), blocks);
                 waterbrick.setCollision(false);
@@ -699,6 +698,30 @@ public class Block {
             case "minecraft:glass_pane":
                 bricks.addAll(pane(x, z, y, new Color(255, 255, 255, 0)));
                 break;
+            case "minecraft:white_bed",
+                    "minecraft:orange_bed",
+                    "minecraft:magenta_bed",
+                    "minecraft:light_blue_bed",
+                    "minecraft:yellow_bed",
+                    "minecraft:lime_bed",
+                    "minecraft:pink_bed",
+                    "minecraft:gray_bed",
+                    "minecraft:light_gray_bed",
+                    "minecraft:cyan_bed",
+                    "minecraft:purple_bed",
+                    "minecraft:blue_bed",
+                    "minecraft:brown_bed",
+                    "minecraft:green_bed",
+                    "minecraft:red_bed",
+                    "minecraft:black_bed":
+                return BedBuilder.build(x, z, y, this);
+            case "minecraft:pumpkin":
+                bricks.add(cube(x, z, y, new Color(196, 115, 24, 255)));
+                break;
+            case "minecraft:cobblestone_wall", "minecraft:mossy_cobblestone_wall":
+                return WallBuilder.build(x, z, y, this);
+            case "minecraft:torch":
+                return TorchBuilder.build(x, z, y);
             default:
                 unsupported.add(blockType);
         }
@@ -779,6 +802,7 @@ public class Block {
                     "minecraft:petrified_oak_slab",
                     "minecraft:cobblestone_slab",
                     "minecraft:brick_slab",
+                    "minecraft:rail",
                     "minecraft:stone_brick_slab",
                     "minecraft:nether_brick_slab",
                     "minecraft:quartz_slab",
@@ -798,6 +822,24 @@ public class Block {
                     "minecraft:detector_rail",
                     "minecraft:snow",
                     "minecraft:water",
+                    "minecraft:white_bed",
+                    "minecraft:orange_bed",
+                    "minecraft:magenta_bed",
+                    "minecraft:light_blue_bed",
+                    "minecraft:yellow_bed",
+                    "minecraft:lime_bed",
+                    "minecraft:pink_bed",
+                    "minecraft:gray_bed",
+                    "minecraft:light_gray_bed",
+                    "minecraft:cyan_bed",
+                    "minecraft:purple_bed",
+                    "minecraft:blue_bed",
+                    "minecraft:brown_bed",
+                    "minecraft:green_bed",
+                    "minecraft:red_bed",
+                    "minecraft:black_bed",
+                    "minecraft:cobblestone_wall",
+                    "minecraft:mossy_cobblestone_wall",
                     "minecraft:lava" -> true;
             default -> false;
         };

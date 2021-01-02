@@ -7,8 +7,6 @@ import net.querz.nbt.tag.CompoundTag;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Minecraft.Facing.NORTH;
-
 public class ChestBuilder {
 
     private static final Color BORDER = new Color(52, 46, 37, 255);
@@ -129,7 +127,7 @@ public class ChestBuilder {
 
         switch (facing) {
             case NORTH, SOUTH -> {
-                int off = 15 * (facing == Facing.NORTH ? 1 : -1);
+                int off = 15 * (facing == Facing.SOUTH ? 1 : -1);
                 brick.setSize(2, 1, 4);
                 brick.setPosition(x, z + off, y + h);
             }
