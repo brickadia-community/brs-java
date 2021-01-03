@@ -21,7 +21,7 @@ public class MinecraftExample {
     void testWriteMinecraft() throws IOException {
         SaveData save = new SaveData();
         save.setDescription("Minecraft chunk");
-        save.setBrickAssets(List.of("PB_DefaultMicroBrick"));
+        save.setBrickAssets(List.of("PB_DefaultMicroBrick", "PB_DefaultMicroWedge"));
 
         readRegion("region/r.-1.0.mca", save, -1, 0);
 
@@ -82,7 +82,7 @@ public class MinecraftExample {
                             continue;
                     }
 
-                    save.getBricks().addAll(blocks[x][y][z].getBricks(x, z, y, mcaFile, blocks));
+                    save.getBricks().addAll(blocks[x][y][z].getBricks(x, z, y, rx, ry, mcaFile, blocks));
                 }
             }
         }

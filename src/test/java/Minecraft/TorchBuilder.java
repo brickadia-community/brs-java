@@ -8,9 +8,9 @@ import java.util.List;
 
 public class TorchBuilder {
 
-    private static final Color BASE = new Color(110, 87, 55, 255);
-    private static final Color GLOW = new Color(255, 255, 203, 255);
-    private static final Color FLAME = new Color(255, 180, 0, 255);
+    public static final Color BASE = new Color(110, 87, 55, 255);
+    public static final Color GLOW = new Color(255, 255, 203, 255);
+    public static final Color FLAME = new Color(255, 180, 0, 255);
 
     public static List<Brick> build(int x, int z, int y) {
         List<Brick> bricks = new ArrayList<>();

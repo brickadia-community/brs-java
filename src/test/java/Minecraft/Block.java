@@ -309,73 +309,6 @@ public class Block {
         return foliageColor;
     }
 
-    public List<Brick> pane(int x, int z, int y, Color color) {
-        List<Brick> bricks = new ArrayList<>();
-        Color border = new Color(255, 255, 255, 255);
-        Brick midBot = new Brick();
-        Brick midTop = new Brick();
-        midBot.setSize(1, 1, 1);
-        midTop.setSize(1, 1, 1);
-        midBot.setPosition(x, z, y - 7*MB - 1);
-        midTop.setPosition(x, z, y + 7*MB + 1);
-        midBot.setColor(border);
-        midTop.setColor(border);
-        //bricks.add(midBot);
-        //bricks.add(midTop);
-
-        boolean north = ((StringTag) properties.get("north")).getValue().equals("true");
-        boolean south = ((StringTag) properties.get("south")).getValue().equals("true");
-        boolean east = ((StringTag) properties.get("east")).getValue().equals("true");
-        boolean west = ((StringTag) properties.get("west")).getValue().equals("true");
-
-        if (north && south) {
-            Brick edgeN = new Brick();
-            edgeN.setSize(1, 1, SCALE);
-            edgeN.setPosition(x, z + 7*MB + 1, y);
-            edgeN.setColor(border);
-            bricks.add(edgeN);
-            Brick edgeS = new Brick();
-            edgeS.setSize(1, 1, SCALE);
-            edgeS.setPosition(x, z - 7*MB - 1, y);
-            edgeS.setColor(border);
-            bricks.add(edgeS);
-            Brick bot = new Brick();
-            bot.setSize(1, SCALE - 2, 1);
-            bot.setPosition(x, z, y - 7*MB - 1);
-            bot.setColor(border);
-            bricks.add(bot);
-            Brick top = new Brick();
-            top.setSize(1, SCALE - 2, 1);
-            top.setPosition(x, z, y + 7*MB + 1);
-            top.setColor(border);
-            bricks.add(top);
-        }
-        if (east && west) {
-            Brick edgeE = new Brick();
-            edgeE.setSize(1, 1, SCALE);
-            edgeE.setPosition(x + 7*MB + 1, z, y);
-            edgeE.setColor(border);
-            bricks.add(edgeE);
-            Brick edgeW = new Brick();
-            edgeW.setSize(1, 1, SCALE);
-            edgeW.setPosition(x - 7*MB - 1, z, y);
-            edgeW.setColor(border);
-            bricks.add(edgeW);
-            Brick bot = new Brick();
-            bot.setSize(SCALE - 2, 1, 1);
-            bot.setPosition(x, z, y - 7*MB - 1);
-            bot.setColor(border);
-            bricks.add(bot);
-            Brick top = new Brick();
-            top.setSize(SCALE - 2, 1, 1);
-            top.setPosition(x, z, y + 7*MB + 1);
-            top.setColor(border);
-            bricks.add(top);
-        }
-
-        return bricks;
-    }
-
     public List<Brick> stairs(int x, int z, int y, Color color) {
         List<Brick> bricks = new ArrayList<>();
         String half = ((StringTag) properties.get("half")).getValue();
@@ -433,11 +366,11 @@ public class Block {
         return Math.max(min, Math.min(val, max));
     }
 
-    public List<Brick> getBricks(int rx, int rz, int ry, MCAFile mcaFile, Block[][][] blocks) {
+    public List<Brick> getBricks(int rx, int rz, int ry, int regX, int regY, MCAFile mcaFile, Block[][][] blocks) {
         List<Brick> bricks = new ArrayList<>();
 
-        int x = rx * SCALE * 2;
-        int z = rz * SCALE * 2;
+        int x = rx * SCALE * 2 + regX * 32 * 16;
+        int z = rz * SCALE * 2 + regY * 32 * 16;
         int y = ry * SCALE * 2 + SCALE;
         switch (blockType) {
             case "minecraft:air", "minecraft:cave_air", "minecraft:void_air":
@@ -479,9 +412,6 @@ public class Block {
             case "minecraft:stone", "minecraft:infested_stone":
                 bricks.add(cube(x, z, y, new Color(125, 125, 125, 255)));
                 break;
-            case "minecraft:cobblestone":
-                bricks.add(cube(x, z, y, COBBLE_COLOR));
-                break;
             case "minecraft:granite":
                 bricks.add(cube(x, z, y, new Color(149, 103, 86, 255)));
                 break;
@@ -506,9 +436,8 @@ public class Block {
             case "minecraft:polished_andesite":
                 bricks.add(cube(x, z, y, new Color(132, 135, 134, 255)));
                 break;
-            case "minecraft:mossy_cobblestone":
-                bricks.add(cube(x, z, y, new Color(110, 119, 95, 255)));
-                break;
+            case "minecraft:cobblestone", "minecraft:mossy_cobblestone":
+                return CobblestoneBuilder.build(x, z, y, this);
             case "minecraft:bricks":
                 bricks.add(cube(x, z, y, new Color(151, 98, 83, 255)));
                 break;
@@ -661,43 +590,9 @@ public class Block {
                 bricks.addAll(ChestBuilder.build(x, z, y, properties));
                 break;
             case "minecraft:grindstone":
-                String face = ((StringTag) properties.get("face")).getValue();
-                String facing = ((StringTag) properties.get("face")).getValue();
-                Color grindColor = new Color(140, 140, 140, 255);
-                Color pivotColor = new Color(73, 46, 21, 255);
-                if (face.equals("floor")) {
-                    Brick stone = new Brick();
-                    Brick pivotBearingL = new Brick();
-                    Brick pivotBearingR = new Brick();
-                    stone.setColor(grindColor);
-                    pivotBearingL.setColor(pivotColor);
-                    pivotBearingR.setColor(pivotColor);
-                    switch (facing) {
-                        case "north", "south" -> {
-                            stone.setSize(8, 12, 12);
-                            stone.setPosition(x, z, y + 4);
-                            pivotBearingL.setSize(2, 6, 6);
-                            pivotBearingL.setPosition(x - 5*MB, z, y);
-                            pivotBearingR.setSize(2, 6, 6);
-                            pivotBearingR.setPosition(x + 5*MB, z, y);
-                        }
-                        case "east", "west" -> {
-                            stone.setSize(12, 8, 12);
-                            stone.setPosition(x, z, y + 4);
-                            pivotBearingL.setSize(6, 2, 6);
-                            pivotBearingL.setPosition(x, z - 5*MB, y);
-                            pivotBearingR.setSize(6, 2, 6);
-                            pivotBearingR.setPosition(x, z + 5*MB, y);
-                        }
-                    }
-                    //bricks.add(stone);
-                    bricks.add(pivotBearingL);
-                    bricks.add(pivotBearingR);
-                }
-                break;
+                return GrindstoneBuilder.build(x, z, y, this);
             case "minecraft:glass_pane":
-                bricks.addAll(pane(x, z, y, new Color(255, 255, 255, 0)));
-                break;
+                return PaneBuilder.build(x, z, y, this);
             case "minecraft:white_bed",
                     "minecraft:orange_bed",
                     "minecraft:magenta_bed",
@@ -722,6 +617,10 @@ public class Block {
                 return WallBuilder.build(x, z, y, this);
             case "minecraft:torch":
                 return TorchBuilder.build(x, z, y);
+            case "minecraft:spruce_trapdoor":
+                return TrapdoorBuilder.build(x, z, y, this);
+            case "minecraft:wall_torch":
+                return WallTorchBuilder.build(x, z, y, this);
             default:
                 unsupported.add(blockType);
         }
@@ -786,6 +685,7 @@ public class Block {
                     "minecraft:peony",
                     "minecraft:white_tulip",
                     "minecraft:pink_tulip",
+                    "minecraft:pumpkin_stem",
                     "minecraft:lilac",
                     "minecraft:lily_of_the_valley",
                     "minecraft:oxeye_daisy",
@@ -812,6 +712,7 @@ public class Block {
                     "minecraft:prismarine_brick_slab",
                     "minecraft:dark_prismarine_slab",
                     "minecraft:torch",
+                    "minecraft:wall_torch",
                     "minecraft:oak_sapling",
                     "minecraft:spruce_sapling",
                     "minecraft:birch_sapling",

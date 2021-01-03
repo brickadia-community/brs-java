@@ -40,23 +40,31 @@ public class OreBuilder {
     private static List<Brick> edges(int x, int z, int y) {
         List<Brick> bricks = new ArrayList<>();
 
-        for (int i=0; i < 8; ++i) {
+        for (int i=0; i < 4; ++i) {
             Brick brick = new Brick();
             brick.setColor(STONE);
-            brick.setSize(4, 4, 4);
+            brick.setSize(4, 6, 4);
             bricks.add(brick);
         }
 
-        int off = 12;
+        for (int i=0; i < 4; ++i) {
+            Brick brick = new Brick();
+            brick.setColor(STONE);
+            brick.setSize(6, 4, 4);
+            bricks.add(brick);
+        }
 
-        bricks.get(0).setPosition(x, z + off, y - off);
-        bricks.get(1).setPosition(x, z - off, y - off);
-        bricks.get(2).setPosition(x + off, z, y - off);
-        bricks.get(3).setPosition(x - off, z, y - off);
-        bricks.get(4).setPosition(x, z + off, y + off);
-        bricks.get(5).setPosition(x, z - off, y + off);
-        bricks.get(6).setPosition(x + off, z, y + off);
-        bricks.get(7).setPosition(x - off, z, y + off);
+        int off = 10;
+        int yoff = 12;
+
+        bricks.get(0).setPosition(x, z + off, y - yoff);
+        bricks.get(1).setPosition(x, z - off, y - yoff);
+        bricks.get(2).setPosition(x, z + off, y + yoff);
+        bricks.get(3).setPosition(x, z - off, y + yoff);
+        bricks.get(4).setPosition(x + off, z, y - yoff);
+        bricks.get(5).setPosition(x - off, z, y - yoff);
+        bricks.get(6).setPosition(x + off, z, y + yoff);
+        bricks.get(7).setPosition(x - off, z, y + yoff);
 
         return bricks;
     }
