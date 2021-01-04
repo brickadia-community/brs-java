@@ -23,7 +23,7 @@ public class MinecraftExample {
         save.setDescription("Minecraft chunk");
         save.setBrickAssets(List.of("PB_DefaultMicroBrick", "PB_DefaultMicroWedge"));
 
-        readRegion("region/r.-1.0.mca", save, -1, 0);
+        readRegion("region/region/r.-1.0.mca", save, -1, 0);
 
         for (String block : Block.unsupported) {
             System.out.println(block);
@@ -40,7 +40,7 @@ public class MinecraftExample {
         Block[][][] blocks = new Block[REGION_SIZE * CHUNK_WIDTH][CHUNK_HEIGHT][REGION_SIZE * CHUNK_WIDTH];
 
         for (int chunkX=0; chunkX < REGION_SIZE; chunkX++) {
-            for (int chunkY = 0; chunkY < REGION_SIZE/3; chunkY++) {
+            for (int chunkY = 0; chunkY < REGION_SIZE; chunkY++) {
                 Chunk chunk = mcaFile.getChunk(chunkX, chunkY);
                 if (chunk != null)
                     readChunk(blocks, chunk, chunkX, chunkY);
@@ -74,7 +74,7 @@ public class MinecraftExample {
                         };
                         boolean surrounded = true;
                         for (Block block : surroundingBlocks)
-                            if (block == null || block.isSeethrough()) {
+                            if ((block == null || block.isSeethrough()) && !(blocks[x][y][z].getBlockType().equals("minecraft:water") && block != null && block.getBlockType().equals("minecraft:water"))) {
                                 surrounded = false;
                                 break;
                             }

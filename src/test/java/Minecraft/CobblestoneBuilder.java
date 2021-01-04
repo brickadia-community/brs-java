@@ -8,8 +8,8 @@ import java.util.List;
 
 public class CobblestoneBuilder {
 
-    private static final Color COBBLE = new Color(127, 127, 127, 255);
-    private static final Color MOSS = new Color(110, 119, 95, 255);
+    public static final Color COBBLE = new Color(127, 127, 127, 255);
+    public static final Color MOSS = new Color(110, 119, 95, 255);
 
     public static List<Brick> build(int x, int z, int y, Block block) {
         List<Brick> bricks = new ArrayList<>();

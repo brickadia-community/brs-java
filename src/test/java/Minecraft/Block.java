@@ -13,15 +13,6 @@ public class Block {
     private static final int SCALE = 16;
     private static final int MB = 2;
 
-    private static final Color DIRT_COLOR = new Color(121, 85, 58, 255);
-    private static final Color COBBLE_COLOR = new Color(127, 127, 127, 255);
-    private static final Color OAK_COLOR = new Color(162, 131, 79, 255);
-    private static final Color SPRUCE_COLOR = new Color(115, 85, 49, 255);
-    private static final Color BIRCH_COLOR = new Color(192, 175, 121, 255);
-    private static final Color JUNGLE_COLOR = new Color(160, 115, 81, 255);
-    private static final Color ACACIA_COLOR = new Color(168, 90, 50, 255);
-    private static final Color DARK_OAK_COLOR = new Color(67, 43, 20, 255);
-
     private static final int GRASS_BASE = 147;
     private static final int FOLIAGE_BASE = 130;
 
@@ -47,177 +38,6 @@ public class Block {
         return blockType;
     }
 
-    public Brick cube(int x, int z, int y, Color color) {
-        Brick brick = new Brick();
-        brick.setSize(SCALE, SCALE, SCALE);
-        brick.setPosition(x, z, y);
-        brick.setColor(color);
-        return brick;
-    }
-
-    public Brick bot7o8(int x, int z, int y, Color color) {
-        Brick brick = new Brick();
-        brick.setSize(SCALE, SCALE, (SCALE * 7) / 8);
-        brick.setPosition(x, z, y - MB);
-        brick.setColor(color);
-        return brick;
-    }
-
-    public Brick top1o8(int x, int z, int y, Color color) {
-        Brick brick = new Brick();
-        brick.setSize(SCALE, SCALE, MB);
-        brick.setPosition(x, z, y + MB * 7);
-        brick.setColor(color);
-        return brick;
-    }
-
-    public Brick bot1o8(int x, int z, int y, Color color) {
-        Brick brick = new Brick();
-        brick.setSize(SCALE, SCALE, MB);
-        brick.setPosition(x, z, y - MB * 7);
-        brick.setColor(color);
-        return brick;
-    }
-
-    public Brick pathBot(int x, int z, int y, Color color) {
-        Brick brick = new Brick();
-        brick.setSize(SCALE, SCALE, (SCALE * 7) / 8 - 1);
-        brick.setPosition(x, z, y - 3);
-        brick.setColor(color);
-        return brick;
-    }
-
-    public Brick pathTop(int x, int z, int y, Color color) {
-        Brick brick = new Brick();
-        brick.setSize(SCALE, SCALE, MB);
-        brick.setPosition(x, z, y + MB * 6);
-        brick.setColor(color);
-        return brick;
-    }
-
-    public List<Brick> fence(int x, int z, int y, Color color) {
-        List<Brick> bricks = new ArrayList<>();
-        Brick post = new Brick();
-        post.setSize(4, 4, SCALE);
-        post.setPosition(x, z, y);
-        post.setColor(color);
-        bricks.add(post);
-
-        boolean north = ((StringTag) properties.get("north")).getValue().equals("true");
-        boolean south = ((StringTag) properties.get("south")).getValue().equals("true");
-        boolean east = ((StringTag) properties.get("east")).getValue().equals("true");
-        boolean west = ((StringTag) properties.get("west")).getValue().equals("true");
-
-        if (north) {
-            Brick bot = new Brick();
-            bot.setSize(2, 6, 3);
-            bot.setPosition(x, z - 5*MB, y - 1);
-            bot.setColor(color);
-            bricks.add(bot);
-            Brick top = new Brick();
-            top.setSize(2, 6, 3);
-            top.setPosition(x, z - 5*MB, y + 6*MB - 1);
-            top.setColor(color);
-            bricks.add(top);
-        }
-        if (south) {
-            Brick bot = new Brick();
-            bot.setSize(2, 6, 3);
-            bot.setPosition(x, z + 5*MB, y - 1);
-            bot.setColor(color);
-            bricks.add(bot);
-            Brick top = new Brick();
-            top.setSize(2, 6, 3);
-            top.setPosition(x, z + 5*MB, y + 6*MB - 1);
-            top.setColor(color);
-            bricks.add(top);
-        }
-        if (east) {
-            Brick bot = new Brick();
-            bot.setSize(6, 2, 3);
-            bot.setPosition(x + 5*MB, z, y - 1);
-            bot.setColor(color);
-            bricks.add(bot);
-            Brick top = new Brick();
-            top.setSize(6, 2, 3);
-            top.setPosition(x + 5*MB, z, y + 6*MB - 1);
-            top.setColor(color);
-            bricks.add(top);
-        }
-        if (west) {
-            Brick bot = new Brick();
-            bot.setSize(6, 2, 3);
-            bot.setPosition(x - 5*MB, z, y - 1);
-            bot.setColor(color);
-            bricks.add(bot);
-            Brick top = new Brick();
-            top.setSize(6, 2, 3);
-            top.setPosition(x - 5*MB, z, y + 6*MB - 1);
-            top.setColor(color);
-            bricks.add(top);
-        }
-
-        return bricks;
-    }
-
-    public List<Brick> logSides(int x, int z, int y, Color color) {
-        String axis = ((StringTag) properties.get("axis")).getValue();
-        Brick brickT = new Brick();
-        Brick brickL = new Brick();
-        Brick brickR = new Brick();
-        Brick brickD = new Brick();
-        switch (axis) {
-            case "y" -> {
-                brickT.setSize(SCALE, 1, SCALE);
-                brickD.setSize(SCALE, 1, SCALE);
-                brickR.setSize(1, SCALE - 2, SCALE);
-                brickL.setSize(1, SCALE - 2, SCALE);
-                brickT.setPosition(x, z + 15, y);
-                brickD.setPosition(x, z - 15, y);
-                brickR.setPosition(x + 15, z, y);
-                brickL.setPosition(x - 15, z, y);
-            }
-            case "z" -> {
-                brickT.setSize(SCALE, SCALE, 1);
-                brickD.setSize(SCALE, SCALE, 1);
-                brickR.setSize(1, SCALE, SCALE - 2);
-                brickL.setSize(1, SCALE, SCALE - 2);
-                brickT.setPosition(x, z, y + 15);
-                brickD.setPosition(x, z, y - 15);
-                brickR.setPosition(x + 15, z, y);
-                brickL.setPosition(x - 15, z, y);
-            }
-            case "x" -> {
-                brickT.setSize(SCALE, SCALE, 1);
-                brickD.setSize(SCALE, SCALE, 1);
-                brickR.setSize(SCALE, 1, SCALE - 2);
-                brickL.setSize(SCALE, 1, SCALE - 2);
-                brickT.setPosition(x, z, y + 15);
-                brickD.setPosition(x, z, y - 15);
-                brickR.setPosition(x, z + 15, y);
-                brickL.setPosition(x, z - 15, y);
-            }
-        }
-
-        brickT.setColor(color);
-        brickD.setColor(color);
-        brickR.setColor(color);
-        brickL.setColor(color);
-        return List.of(brickT, brickL, brickR, brickD);
-    }
-
-    public Brick logInside(int x, int z, int y, Color color) {
-        String axis = ((StringTag) properties.get("axis")).getValue();
-        Brick brick = new Brick();
-        switch (axis) {
-            case "y" -> brick.setSize((SCALE * 7) / 8, (SCALE * 7) / 8, SCALE);
-            case "z" -> brick.setSize((SCALE * 7) / 8, SCALE, (SCALE * 7) / 8);
-            case "x" -> brick.setSize(SCALE, (SCALE * 7) / 8, (SCALE * 7) / 8);
-        }
-        brick.setPosition(x, z, y);
-        brick.setColor(color);
-        return brick;
-    }
 
     public Color grassColor(int x, int z, int y, MCAFile mcaFile) {
         /**
@@ -256,28 +76,6 @@ public class Block {
         return grassColor;
     }
 
-    public Brick liquid(int rx, int rz, int ry, Color color, Block[][][] blocks) {
-        int x = rx * SCALE * 2;
-        int z = rz * SCALE * 2;
-        int y = ry * SCALE * 2 + SCALE;
-
-        boolean top = true;
-        if (ry < 256 && blocks[rx][ry+1][rz].blockType.equals(this.blockType)) {
-            top = false;
-        }
-
-        if (top) {
-            int level = Integer.parseInt(((StringTag) properties.get("level")).getValue());
-            Brick brick = new Brick();
-            brick.setSize(SCALE, SCALE, SCALE - (level+1)*2);
-            brick.setPosition(x, z, y - (level+1)*2);
-            brick.setColor(color);
-            return brick;
-        } else {
-            return cube(x, z, y, color);
-        }
-    }
-
     public Color foliageColor(int x, int z, int y, MCAFile mcaFile) {
         int rsum = 0;
         int gsum = 0;
@@ -309,323 +107,150 @@ public class Block {
         return foliageColor;
     }
 
-    public List<Brick> stairs(int x, int z, int y, Color color) {
-        List<Brick> bricks = new ArrayList<>();
-        String half = ((StringTag) properties.get("half")).getValue();
-        String facing = ((StringTag) properties.get("facing")).getValue();
-        bricks.add(slab(x, z, y, color, half));
-
-        int offset = MB*4 * (half.equals("bottom") ? 1 : -1);
-
-        switch (facing) {
-            case "north" -> {
-                Brick brick = new Brick();
-                brick.setSize(SCALE, SCALE/2, SCALE/2);
-                brick.setPosition(x, z - MB*4, y + offset);
-                brick.setColor(color);
-                bricks.add(brick);
-            }
-            case "south" -> {
-                Brick brick = new Brick();
-                brick.setSize(SCALE, SCALE/2, SCALE/2);
-                brick.setPosition(x, z + MB*4, y + offset);
-                brick.setColor(color);
-                bricks.add(brick);
-            }
-            case "east" -> {
-                Brick brick = new Brick();
-                brick.setSize(SCALE/2, SCALE, SCALE/2);
-                brick.setPosition(x + MB*4, z, y + offset);
-                brick.setColor(color);
-                bricks.add(brick);
-            }
-            case "west" -> {
-                Brick brick = new Brick();
-                brick.setSize(SCALE/2, SCALE, SCALE/2);
-                brick.setPosition(x - MB*4, z, y + offset);
-                brick.setColor(color);
-                bricks.add(brick);
-            }
-        }
-
-        return bricks;
-    }
-
-    public Brick slab(int x, int z, int y, Color color, String half) {
-        Brick brick = new Brick();
-        brick.setSize(SCALE, SCALE, SCALE/2);
-        brick.setColor(color);
-        switch (half) {
-            case "bottom" -> brick.setPosition(x, z, y - 4*MB);
-            case "top" -> brick.setPosition(x, z, y + 4*MB);
-        }
-        return brick;
-    }
-
     public int clamp(int val, int min, int max) {
         return Math.max(min, Math.min(val, max));
     }
 
     public List<Brick> getBricks(int rx, int rz, int ry, int regX, int regY, MCAFile mcaFile, Block[][][] blocks) {
-        List<Brick> bricks = new ArrayList<>();
-
         int x = rx * SCALE * 2 + regX * 32 * 16;
         int z = rz * SCALE * 2 + regY * 32 * 16;
         int y = ry * SCALE * 2 + SCALE;
-        switch (blockType) {
-            case "minecraft:air", "minecraft:cave_air", "minecraft:void_air":
-                break;
-            case "minecraft:dirt":
-                bricks.add(cube(x, z, y, DIRT_COLOR));
-                break;
-            case "minecraft:coarse_dirt":
-                bricks.add(cube(x, z, y, new Color(119, 85, 59, 255)));
-                break;
-            case "minecraft:grass_block":
-                bricks.add(bot7o8(x, z, y, new Color(121, 85, 58, 255)));
-                bricks.add(top1o8(x, z, y, grassColor(rx, rz, ry, mcaFile)));
-                break;
-            case "minecraft:grass_path":
-                bricks.add(pathBot(x, z, y, new Color(121, 85, 58, 255)));
-                bricks.add(pathTop(x, z, y, new Color(148, 122, 65, 255)));
-                break;
-            case "minecraft:podzol":
-                bricks.add(bot7o8(x, z, y, DIRT_COLOR));
-                bricks.add(top1o8(x, z, y, new Color(89, 63, 29, 255)));
-                break;
-            case "minecraft:mycelium":
-                bricks.add(bot7o8(x, z, y, DIRT_COLOR));
-                bricks.add(top1o8(x, z, y, new Color(111, 98, 101, 255)));
-                break;
-            case "minecraft:gravel":
-                bricks.add(cube(x, z, y, new Color(131, 127, 126, 255)));
-                break;
-            case "minecraft:sand":
-                bricks.add(cube(x, z, y, new Color(219, 207, 163, 255)));
-                break;
-            case "minecraft:red_sand":
-                bricks.add(cube(x, z, y, new Color(190, 102, 33, 255)));
-                break;
-            case "minecraft:clay":
-                bricks.add(cube(x, z, y, new Color(160, 166, 179, 255)));
-                break;
-            case "minecraft:stone", "minecraft:infested_stone":
-                bricks.add(cube(x, z, y, new Color(125, 125, 125, 255)));
-                break;
-            case "minecraft:granite":
-                bricks.add(cube(x, z, y, new Color(149, 103, 86, 255)));
-                break;
-            case "minecraft:polished_granite":
-                bricks.add(cube(x, z, y, new Color(154, 107, 89, 255)));
-                break;
-            case "minecraft:bedrock":
-                bricks.add(cube(x, z, y, new Color(85, 85, 85, 255)));
-                break;
-            case "minecraft:diorite":
-                bricks.add(cube(x, z, y, new Color(189, 188, 189, 255)));
-                break;
-            case "minecraft:polished_diorite":
-                bricks.add(cube(x, z, y, new Color(193, 193, 195, 255)));
-                break;
-            case "minecraft:obsidian":
-                bricks.add(cube(x, z, y, new Color(15, 11, 25, 255)));
-                break;
-            case "minecraft:andesite":
-                bricks.add(cube(x, z, y, new Color(136, 136, 137, 255)));
-                break;
-            case "minecraft:polished_andesite":
-                bricks.add(cube(x, z, y, new Color(132, 135, 134, 255)));
-                break;
-            case "minecraft:cobblestone", "minecraft:mossy_cobblestone":
-                return CobblestoneBuilder.build(x, z, y, this);
-            case "minecraft:bricks":
-                bricks.add(cube(x, z, y, new Color(151, 98, 83, 255)));
-                break;
-            case "minecraft:oak_leaves", "minecraft:jungle_leaves", "minecraft:acacia_leaves", "minecraft:dark_oak_leaves":
-                bricks.add(cube(x, z, y, foliageColor(rx, rz, ry, mcaFile)));
-                break;
-            case "minecraft:spruce_leaves":
-                Color spruce_color = new Color(97, 153, 97, 255);
+        return switch (blockType) {
+            case "minecraft:air", "minecraft:cave_air", "minecraft:void_air" -> List.of();
+            case "minecraft:dirt" -> CubeBuilder.build(x, z, y, Colors.DIRT);
+            case "minecraft:coarse_dirt" -> CubeBuilder.build(x, z, y, Colors.COARSE_DIRT);
+            case "minecraft:grass_block" -> GrassBuilder.build(x, z, y, grassColor(x, z, y, mcaFile));
+            case "minecraft:grass_path" -> PathBuilder.build(x, z, y);
+            case "minecraft:podzol" -> GrassBuilder.build(x, z, y, Colors.PODZOL);
+            case "minecraft:mycelium" -> GrassBuilder.build(x, z, y, Colors.MYCELIUM);
+            case "minecraft:gravel" -> CubeBuilder.build(x, z, y, Colors.GRAVEL);
+            case "minecraft:sand" -> CubeBuilder.build(x, z, y, Colors.SAND);
+            case "minecraft:red_sand" -> CubeBuilder.build(x, z, y, Colors.RED_SAND);
+            case "minecraft:clay" -> CubeBuilder.build(x, z, y, Colors.CLAY);
+            case "minecraft:stone", "minecraft:infested_stone" -> CubeBuilder.build(x, z, y, Colors.STONE);
+            case "minecraft:granite" -> CubeBuilder.build(x, z, y, Colors.GRANITE);
+            case "minecraft:polished_granite" -> CubeBuilder.build(x, z, y, Colors.POLISHED_GRANITE);
+            case "minecraft:bedrock" -> CubeBuilder.build(x, z, y, Colors.BEDROCK);
+            case "minecraft:diorite" -> CubeBuilder.build(x, z, y, Colors.DIORITE);
+            case "minecraft:polished_diorite" -> CubeBuilder.build(x, z, y, Colors.POLISHED_DIORITE);
+            case "minecraft:obsidian" -> CubeBuilder.build(x, z, y, Colors.OBSIDIAN);
+            case "minecraft:andesite" -> CubeBuilder.build(x, z, y, Colors.ANDESITE);
+            case "minecraft:polished_andesite" -> CubeBuilder.build(x, z, y, Colors.POLISHED_ANDESITE);
+            case "minecraft:cobblestone", "minecraft:mossy_cobblestone" -> CobblestoneBuilder.build(x, z, y, this);
+            case "minecraft:bricks" -> CubeBuilder.build(x, z, y, Colors.BRICK);
+            case "minecraft:oak_leaves",
+                 "minecraft:jungle_leaves",
+                 "minecraft:acacia_leaves",
+                 "minecraft:dark_oak_leaves" -> CubeBuilder.build(x, z, y, foliageColor(rx, rz, ry, mcaFile));
+            case "minecraft:spruce_leaves" -> {
+                Color spruce_color = Colors.SPRUCE_LEAVES;
                 spruce_color.multiply(FOLIAGE_BASE);
-                bricks.add(cube(x, z, y, spruce_color));
-                break;
-            case "minecraft:birch_leaves":
-                Color birch_color = new Color(128, 167, 85, 255);
+                yield CubeBuilder.build(x, z, y, spruce_color);
+            }
+            case "minecraft:birch_leaves" -> {
+                Color birch_color = Colors.BIRCH_LEAVES;
                 birch_color.multiply(FOLIAGE_BASE);
-                bricks.add(cube(x, z, y, birch_color));
-                break;
-            case "minecraft:oak_log":
-                bricks.addAll(logSides(x, z, y, new Color(109, 85, 50, 255)));
-                bricks.add(logInside(x, z, y, new Color(169, 136, 82, 255)));
-                break;
-            case "minecraft:spruce_log":
-                bricks.addAll(logSides(x, z, y, new Color(58, 37, 16, 255)));
-                bricks.add(logInside(x, z, y, new Color(117, 87, 51, 255)));
-                break;
-            case "minecraft:birch_log":
-                bricks.addAll(logSides(x, z, y, new Color(216, 215, 210, 255)));
-                bricks.add(logInside(x, z, y, new Color(196, 178, 123, 255)));
-                break;
-            case "minecraft:jungle_log":
-                bricks.addAll(logSides(x, z, y, new Color(85, 68, 25, 255)));
-                bricks.add(logInside(x, z, y, new Color(168, 121, 84, 255)));
-                break;
-            case "minecraft:acacia_log":
-                bricks.addAll(logSides(x, z, y, new Color(103, 96, 86, 255)));
-                bricks.add(logInside(x, z, y, new Color(170, 91, 49, 255)));
-                break;
-            case "minecraft:dark_oak_log":
-                bricks.addAll(logSides(x, z, y, new Color(60, 46, 26, 255)));
-                bricks.add(logInside(x, z, y, new Color(70, 44, 21, 255)));
-                break;
-            case "minecraft:stripped_oak_log":
-                bricks.addAll(logSides(x, z, y, new Color(177, 144, 86, 255)));
-                bricks.add(logInside(x, z, y, new Color(169, 136, 82, 255)));
-                break;
-            case "minecraft:stripped_spruce_log":
-                bricks.addAll(logSides(x, z, y, new Color(116, 90, 52, 255)));
-                bricks.add(logInside(x, z, y, new Color(117, 87, 51, 255)));
-                break;
-            case "minecraft:stripped_birch_log":
-                bricks.addAll(logSides(x, z, y, new Color(197, 176, 118, 255)));
-                bricks.add(logInside(x, z, y, new Color(196, 179, 124, 255)));
-                break;
-            case "minecraft:stripped_jungle_log":
-                bricks.addAll(logSides(x, z, y, new Color(200, 174, 142, 255)));
-                bricks.add(logInside(x, z, y, new Color(168, 121, 84, 255)));
-                break;
-            case "minecraft:stripped_acacia_log":
-                bricks.addAll(logSides(x, z, y, new Color(174, 92, 59, 255)));
-                bricks.add(logInside(x, z, y, new Color(170, 91, 49, 255)));
-                break;
-            case "minecraft:stripped_dark_oak_log":
-                bricks.addAll(logSides(x, z, y, new Color(96, 76, 49, 255)));
-                bricks.add(logInside(x, z, y, new Color(69, 44, 21, 255)));
-                break;
-            case "minecraft:snow":
-                bricks.add(bot1o8(x, z, y, new Color(249, 255, 255, 255)));
-                break;
-            case "minecraft:farmland":
-                int moisture = Integer.parseInt(((StringTag) properties.get("moisture")).getValue());
-                if (moisture < 7) {
-                    bricks.add(cube(x, z, y, new Color(143, 103, 71, 255)));
-                } else {
-                    bricks.add(cube(x, z, y, new Color(82, 44, 15, 255)));
-                }
-                break;
-            case "minecraft:crafting_table":
-                bricks.add(cube(x, z, y, new Color(129, 106, 70, 255)));
-                break;
-            case "minecraft:coal_ore", "minecraft:iron_ore", "minecraft:gold_ore", "minecraft:redstone_ore", "minecraft:diamond_ore", "minecraft:lapis_ore", "minecraft:emerald_ore":
-                return OreBuilder.build(x, z, y, this);
-            case "minecraft:water":
-                Brick waterbrick = liquid(rx, rz, ry, new Color(63, 118, 228, 255), blocks);
-                waterbrick.setCollision(false);
-                bricks.add(waterbrick);
-                break;
-            case "minecraft:lava":
-                Brick lavabrick = liquid(rx, rz, ry, new Color(207, 92, 20, 255), blocks);
-                lavabrick.setMaterialIndex(1);
-                lavabrick.setCollision(false);
-                bricks.add(lavabrick);
-                break;
-            case "minecraft:oak_planks":
-                bricks.add(cube(x, z, y, OAK_COLOR));
-                break;
-            case "minecraft:spruce_planks":
-                bricks.add(cube(x, z, y, SPRUCE_COLOR));
-                break;
-            case "minecraft:birch_planks":
-                bricks.add(cube(x, z, y, BIRCH_COLOR));
-                break;
-            case "minecraft:jungle_planks":
-                bricks.add(cube(x, z, y, JUNGLE_COLOR));
-                break;
-            case "minecraft:acacia_planks":
-                bricks.add(cube(x, z, y, ACACIA_COLOR));
-                break;
-            case "minecraft:dark_oak_planks":
-                bricks.add(cube(x, z, y, DARK_OAK_COLOR));
-                break;
-            case "minecraft:oak_fence":
-                bricks.addAll(fence(x, z, y, OAK_COLOR));
-                break;
-            case "minecraft:spruce_fence":
-                bricks.addAll(fence(x, z, y, SPRUCE_COLOR));
-                break;
-            case "minecraft:birch_fence":
-                bricks.addAll(fence(x, z, y, BIRCH_COLOR));
-                break;
-            case "minecraft:jungle_fence":
-                bricks.addAll(fence(x, z, y, JUNGLE_COLOR));
-                break;
-            case "minecraft:acacia_fence":
-                bricks.addAll(fence(x, z, y, ACACIA_COLOR));
-                break;
-            case "minecraft:dark_oak_fence":
-                bricks.addAll(fence(x, z, y, DARK_OAK_COLOR));
-                break;
-            case "minecraft:oak_stairs":
-                bricks.addAll(stairs(x, z, y, OAK_COLOR));
-                break;
-            case "minecraft:spruce_stairs":
-                bricks.addAll(stairs(x, z, y, SPRUCE_COLOR));
-                break;
-            case "minecraft:birch_stairs":
-                bricks.addAll(stairs(x, z, y, BIRCH_COLOR));
-                break;
-            case "minecraft:jungle_stairs":
-                bricks.addAll(stairs(x, z, y, JUNGLE_COLOR));
-                break;
-            case "minecraft:acacia_stairs":
-                bricks.addAll(stairs(x, z, y, ACACIA_COLOR));
-                break;
-            case "minecraft:dark_oak_stairs":
-                bricks.addAll(stairs(x, z, y, DARK_OAK_COLOR));
-                break;
-            case "minecraft:cobblestone_stairs":
-                bricks.addAll(stairs(x, z, y, COBBLE_COLOR));
-                break;
-            case "minecraft:chest":
-                bricks.addAll(ChestBuilder.build(x, z, y, properties));
-                break;
-            case "minecraft:grindstone":
-                return GrindstoneBuilder.build(x, z, y, this);
-            case "minecraft:glass_pane":
-                return PaneBuilder.build(x, z, y, this);
+                yield CubeBuilder.build(x, z, y, birch_color);
+            }
+            case "minecraft:oak_log" -> LogBuilder.build(x, z, y, Colors.OAK_LOG_INSIDE, Colors.OAK_LOG_OUTSIDE, this);
+            case "minecraft:spruce_log" -> LogBuilder.build(x, z, y, Colors.SPRUCE_LOG_INSIDE, Colors.SPRUCE_LOG_OUTSIDE, this);
+            case "minecraft:birch_log" -> LogBuilder.build(x, z, y, Colors.BIRCH_LOG_INSIDE, Colors.BIRCH_LOG_OUTSIDE, this);
+            case "minecraft:jungle_log" -> LogBuilder.build(x, z, y, Colors.JUNGLE_LOG_INSIDE, Colors.JUNGLE_LOG_OUTSIDE, this);
+            case "minecraft:acacia_log" -> LogBuilder.build(x, z, y, Colors.ACACIA_LOG_INSIDE, Colors.ACACIA_LOG_OUTSIDE, this);
+            case "minecraft:dark_oak_log" -> LogBuilder.build(x, z, y, Colors.DARK_OAK_LOG_INSIDE, Colors.DARK_OAK_LOG_OUTSIDE, this);
+            case "minecraft:stripped_oak_log" -> LogBuilder.build(x, z, y, Colors.OAK_LOG_INSIDE, Colors.STRIPPED_OAK_OUTISDE, this);
+            case "minecraft:stripped_spruce_log" -> LogBuilder.build(x, z, y, Colors.SPRUCE_LOG_INSIDE, Colors.STRIPPED_SPRUCE_OUTSIDE, this);
+            case "minecraft:stripped_birch_log" -> LogBuilder.build(x, z, y, Colors.BIRCH_LOG_INSIDE, Colors.STRIPPED_BIRCH_OUTSIDE, this);
+            case "minecraft:stripped_jungle_log" -> LogBuilder.build(x, z, y, Colors.JUNGLE_LOG_INSIDE, Colors.STRIPPED_JUNGLE_OUTSIDE, this);
+            case "minecraft:stripped_acacia_log" -> LogBuilder.build(x, z, y, Colors.ACACIA_LOG_INSIDE, Colors.STRIPPED_ACACIA_OUTSIDE, this);
+            case "minecraft:stripped_dark_oak_log" -> LogBuilder.build(x, z, y, Colors.DARK_OAK_LOG_INSIDE, Colors.STRIPPED_DARK_OAK_OUTSIDE, this);
+            case "minecraft:snow" -> CarpetBuilder.build(x, z, y, Colors.SNOW);
+            case "minecraft:farmland" -> FarmlandBuilder.build(x, z, y, this);
+            case "minecraft:crafting_table" -> CubeBuilder.build(x, z, y, new Color(129, 106, 70, 255));
+            case "minecraft:coal_ore",
+                 "minecraft:iron_ore",
+                 "minecraft:gold_ore",
+                 "minecraft:redstone_ore",
+                 "minecraft:diamond_ore",
+                 "minecraft:lapis_ore",
+                 "minecraft:emerald_ore" -> OreBuilder.build(x, z, y, this);
+            case "minecraft:water" -> List.of();
+            /*{
+                List<Brick> waterbrick = LiquidBuilder.build(rx, rz, ry, regX, regY, Colors.WATER, this, blocks);
+                waterbrick.get(0).setCollision(false);
+                yield waterbrick;
+            }*/
+            case "minecraft:lava" -> {
+                List<Brick> lavabrick = LiquidBuilder.build(rx, rz, ry, regX, regY, Colors.LAVA, this, blocks);
+                lavabrick.get(0).setMaterialIndex(1);
+                lavabrick.get(0).setCollision(false);
+                yield lavabrick;
+            }
+            case "minecraft:oak_planks" -> CubeBuilder.build(x, z, y, Colors.OAK);
+            case "minecraft:spruce_planks" -> CubeBuilder.build(x, z, y, Colors.SPRUCE);
+            case "minecraft:birch_planks" -> CubeBuilder.build(x, z, y, Colors.BIRCH);
+            case "minecraft:jungle_planks" -> CubeBuilder.build(x, z, y, Colors.JUNGLE);
+            case "minecraft:acacia_planks" -> CubeBuilder.build(x, z, y, Colors.ACACIA);
+            case "minecraft:dark_oak_planks" -> CubeBuilder.build(x, z, y, Colors.DARK_OAK);
+            case "minecraft:oak_fence" -> FenceBuilder.build(x, z, y, Colors.OAK, this);
+            case "minecraft:spruce_fence" -> FenceBuilder.build(x, z, y, Colors.SPRUCE, this);
+            case "minecraft:birch_fence" -> FenceBuilder.build(x, z, y, Colors.BIRCH, this);
+            case "minecraft:jungle_fence" -> FenceBuilder.build(x, z, y, Colors.JUNGLE, this);
+            case "minecraft:acacia_fence" -> FenceBuilder.build(x, z, y, Colors.ACACIA, this);
+            case "minecraft:dark_oak_fence" -> FenceBuilder.build(x, z, y, Colors.DARK_OAK, this);
+            case "minecraft:oak_stairs" -> StairsBuilder.build(x, z, y, Colors.OAK, this);
+            case "minecraft:spruce_stairs" -> StairsBuilder.build(x, z, y, Colors.SPRUCE, this);
+            case "minecraft:birch_stairs" -> StairsBuilder.build(x, z, y, Colors.BIRCH, this);
+            case "minecraft:jungle_stairs" -> StairsBuilder.build(x, z, y, Colors.JUNGLE, this);
+            case "minecraft:acacia_stairs" -> StairsBuilder.build(x, z, y, Colors.ACACIA, this);
+            case "minecraft:dark_oak_stairs" -> StairsBuilder.build(x, z, y, Colors.DARK_OAK, this);
+            case "minecraft:cobblestone_stairs" -> StairsBuilder.build(x, z, y, Colors.COBBLE, this);
+            case "minecraft:chest" -> ChestBuilder.build(x, z, y, properties);
+            case "minecraft:grindstone" -> GrindstoneBuilder.build(x, z, y, this);
+            case "minecraft:glass_pane" -> PaneBuilder.build(x, z, y, this);
             case "minecraft:white_bed",
-                    "minecraft:orange_bed",
-                    "minecraft:magenta_bed",
-                    "minecraft:light_blue_bed",
-                    "minecraft:yellow_bed",
-                    "minecraft:lime_bed",
-                    "minecraft:pink_bed",
-                    "minecraft:gray_bed",
-                    "minecraft:light_gray_bed",
-                    "minecraft:cyan_bed",
-                    "minecraft:purple_bed",
-                    "minecraft:blue_bed",
-                    "minecraft:brown_bed",
-                    "minecraft:green_bed",
-                    "minecraft:red_bed",
-                    "minecraft:black_bed":
-                return BedBuilder.build(x, z, y, this);
-            case "minecraft:pumpkin":
-                bricks.add(cube(x, z, y, new Color(196, 115, 24, 255)));
-                break;
-            case "minecraft:cobblestone_wall", "minecraft:mossy_cobblestone_wall":
-                return WallBuilder.build(x, z, y, this);
-            case "minecraft:torch":
-                return TorchBuilder.build(x, z, y);
-            case "minecraft:spruce_trapdoor":
-                return TrapdoorBuilder.build(x, z, y, this);
-            case "minecraft:wall_torch":
-                return WallTorchBuilder.build(x, z, y, this);
-            default:
+                 "minecraft:orange_bed",
+                 "minecraft:magenta_bed",
+                 "minecraft:light_blue_bed",
+                 "minecraft:yellow_bed",
+                 "minecraft:lime_bed",
+                 "minecraft:pink_bed",
+                 "minecraft:gray_bed",
+                 "minecraft:light_gray_bed",
+                 "minecraft:cyan_bed",
+                 "minecraft:purple_bed",
+                 "minecraft:blue_bed",
+                 "minecraft:brown_bed",
+                 "minecraft:green_bed",
+                 "minecraft:red_bed",
+                 "minecraft:black_bed" -> BedBuilder.build(x, z, y, this);
+            case "minecraft:pumpkin" -> CubeBuilder.build(x, z, y, Colors.PUMPKIN);
+            case "minecraft:cobblestone_wall", "minecraft:mossy_cobblestone_wall" -> WallBuilder.build(x, z, y, this);
+            case "minecraft:torch" -> TorchBuilder.build(x, z, y);
+            case "minecraft:spruce_trapdoor" -> TrapdoorBuilder.build(x, z, y, this);
+            case "minecraft:wall_torch" -> WallTorchBuilder.build(x, z, y, this);
+            case "minecraft:netherrack" -> CubeBuilder.build(x, z, y, Colors.NETHERRACK);
+            case "minecraft:stone_bricks" -> BricksBuilder.build(x, z, y, Colors.STONE);
+            case "minecraft:mossy_stone_bricks" -> BricksBuilder.build(x, z, y, CobblestoneBuilder.MOSS);
+            case "minecraft:glowstone" -> {
+                List<Brick> brick = CubeBuilder.build(x, z, y, Colors.GLOWSTONE);
+                brick.get(0).setMaterialIndex(1);
+                yield brick;
+            }
+            case "minecraft:stone_slab" -> SlabBuilder.build(x, z, y, Colors.STONE, this);
+            case "minecraft:sandstone_slab" -> SlabBuilder.build(x, z, y, Colors.SAND, this);
+            case "minecraft:oak_slab" -> SlabBuilder.build(x, z, y, Colors.OAK, this);
+            case "minecraft:spruce_slab" -> SlabBuilder.build(x, z, y, Colors.SPRUCE, this);
+            case "minecraft:birch_slab" -> SlabBuilder.build(x, z, y, Colors.BIRCH, this);
+            case "minecraft:jungle_slab" -> SlabBuilder.build(x, z, y, Colors.JUNGLE, this);
+            case "minecraft:acacia_slab" -> SlabBuilder.build(x, z, y, Colors.ACACIA, this);
+            case "minecraft:dark_oak_slab" -> SlabBuilder.build(x, z, y, Colors.DARK_OAK, this);
+            case "minecraft:brick_slab" -> SlabBuilder.build(x, z, y, Colors.BRICK, this);
+            default -> {
                 unsupported.add(blockType);
-        }
-
-        return bricks;
+                yield List.of();
+            }
+        };
     }
 
     public boolean isAir() {
@@ -638,110 +263,119 @@ public class Block {
     public boolean isSeethrough() {
         return switch(blockType) {
             case "minecraft:air",
-                    "minecraft:cave_air",
-                    "minecraft:void_air",
-                    "minecraft:glass",
-                    "minecraft:grass",
-                    "minecraft:grass_path",
-                    "minecraft:tall_grass",
-                    "minecraft:fern",
-                    "minecraft:large_fern",
-                    "minecraft:grindstone",
-                    "minecraft:dead_bush",
-                    "minecraft:seagrass",
-                    "minecraft:tall_seagrass",
-                    "minecraft:sea_pickle",
-                    "minecraft:cobweb",
-                    "minecraft:dandelion",
-                    "minecraft:poppy",
-                    "minecraft:chest",
-                    "minecraft:blue_orchid",
-                    "minecraft:allium",
-                    "minecraft:azure_bluet",
-                    "minecraft:red_tulip",
-                    "minecraft:orange_tulip",
-                    "minecraft:wheat",
-                    "minecraft:potatoes",
-                    "minecraft:glass_pane",
-                    "minecraft:spruce_trapdoor",
-                    "minecraft:oak_trapdoor",
-                    "minecraft:birch_trapdoor",
-                    "minecraft:jungle_trapdoor",
-                    "minecraft:acacia_trapdoor",
-                    "minecraft:dark_oak_trapdoor",
-                    "minecraft:spruce_fence",
-                    "minecraft:oak_fence",
-                    "minecraft:birch_fence",
-                    "minecraft:jungle_fence",
-                    "minecraft:acacia_fence",
-                    "minecraft:dark_oak_fence",
-                    "minecraft:spruce_stairs",
-                    "minecraft:oak_stairs",
-                    "minecraft:birch_stairs",
-                    "minecraft:jungle_stairs",
-                    "minecraft:acacia_stairs",
-                    "minecraft:dark_oak_stairs",
-                    "minecraft:sweet_berry_bush",
-                    "minecraft:peony",
-                    "minecraft:white_tulip",
-                    "minecraft:pink_tulip",
-                    "minecraft:pumpkin_stem",
-                    "minecraft:lilac",
-                    "minecraft:lily_of_the_valley",
-                    "minecraft:oxeye_daisy",
-                    "minecraft:brown_mushroom",
-                    "minecraft:red_mushroom",
-                    "minecraft:oak_slab",
-                    "minecraft:spruce_slab",
-                    "minecraft:birch_slab",
-                    "minecraft:jungle_slab",
-                    "minecraft:acacia_slab",
-                    "minecraft:dark_oak_slab",
-                    "minecraft:stone_slab",
-                    "minecraft:sandstone_slab",
-                    "minecraft:petrified_oak_slab",
-                    "minecraft:cobblestone_slab",
-                    "minecraft:brick_slab",
-                    "minecraft:rail",
-                    "minecraft:stone_brick_slab",
-                    "minecraft:nether_brick_slab",
-                    "minecraft:quartz_slab",
-                    "minecraft:red_sandstone_slab",
-                    "minecraft:purpur_slab",
-                    "minecraft:prismarine_slab",
-                    "minecraft:prismarine_brick_slab",
-                    "minecraft:dark_prismarine_slab",
-                    "minecraft:torch",
-                    "minecraft:wall_torch",
-                    "minecraft:oak_sapling",
-                    "minecraft:spruce_sapling",
-                    "minecraft:birch_sapling",
-                    "minecraft:jungle_sapling",
-                    "minecraft:acacia_sapling",
-                    "minecraft:dark_oak_sapling",
-                    "minecraft:powered_rail",
-                    "minecraft:detector_rail",
-                    "minecraft:snow",
-                    "minecraft:water",
-                    "minecraft:white_bed",
-                    "minecraft:orange_bed",
-                    "minecraft:magenta_bed",
-                    "minecraft:light_blue_bed",
-                    "minecraft:yellow_bed",
-                    "minecraft:lime_bed",
-                    "minecraft:pink_bed",
-                    "minecraft:gray_bed",
-                    "minecraft:light_gray_bed",
-                    "minecraft:cyan_bed",
-                    "minecraft:purple_bed",
-                    "minecraft:blue_bed",
-                    "minecraft:brown_bed",
-                    "minecraft:green_bed",
-                    "minecraft:red_bed",
-                    "minecraft:black_bed",
-                    "minecraft:cobblestone_wall",
-                    "minecraft:mossy_cobblestone_wall",
-                    "minecraft:lava" -> true;
+                 "minecraft:cave_air",
+                 "minecraft:void_air",
+                 "minecraft:glass",
+                 "minecraft:grass",
+                 "minecraft:grass_path",
+                 "minecraft:tall_grass",
+                 "minecraft:fern",
+                 "minecraft:large_fern",
+                 "minecraft:grindstone",
+                 "minecraft:dead_bush",
+                 "minecraft:seagrass",
+                 "minecraft:tall_seagrass",
+                 "minecraft:sea_pickle",
+                 "minecraft:cobweb",
+                 "minecraft:dandelion",
+                 "minecraft:poppy",
+                 "minecraft:chest",
+                 "minecraft:blue_orchid",
+                 "minecraft:allium",
+                 "minecraft:azure_bluet",
+                 "minecraft:red_tulip",
+                 "minecraft:orange_tulip",
+                 "minecraft:wheat",
+                 "minecraft:potatoes",
+                 "minecraft:glass_pane",
+                 "minecraft:spruce_trapdoor",
+                 "minecraft:oak_trapdoor",
+                 "minecraft:birch_trapdoor",
+                 "minecraft:jungle_trapdoor",
+                 "minecraft:acacia_trapdoor",
+                 "minecraft:dark_oak_trapdoor",
+                 "minecraft:spruce_fence",
+                 "minecraft:oak_fence",
+                 "minecraft:birch_fence",
+                 "minecraft:jungle_fence",
+                 "minecraft:acacia_fence",
+                 "minecraft:dark_oak_fence",
+                 "minecraft:spruce_stairs",
+                 "minecraft:oak_stairs",
+                 "minecraft:birch_stairs",
+                 "minecraft:jungle_stairs",
+                 "minecraft:acacia_stairs",
+                 "minecraft:dark_oak_stairs",
+                 "minecraft:sweet_berry_bush",
+                 "minecraft:peony",
+                 "minecraft:white_tulip",
+                 "minecraft:pink_tulip",
+                 "minecraft:pumpkin_stem",
+                 "minecraft:lilac",
+                 "minecraft:lily_of_the_valley",
+                 "minecraft:oxeye_daisy",
+                 "minecraft:brown_mushroom",
+                 "minecraft:red_mushroom",
+                 "minecraft:oak_slab",
+                 "minecraft:spruce_slab",
+                 "minecraft:birch_slab",
+                 "minecraft:jungle_slab",
+                 "minecraft:acacia_slab",
+                 "minecraft:dark_oak_slab",
+                 "minecraft:stone_slab",
+                 "minecraft:sandstone_slab",
+                 "minecraft:petrified_oak_slab",
+                 "minecraft:cobblestone_slab",
+                 "minecraft:brick_slab",
+                 "minecraft:rail",
+                 "minecraft:stone_brick_slab",
+                 "minecraft:nether_brick_slab",
+                 "minecraft:quartz_slab",
+                 "minecraft:red_sandstone_slab",
+                 "minecraft:purpur_slab",
+                 "minecraft:prismarine_slab",
+                 "minecraft:prismarine_brick_slab",
+                 "minecraft:dark_prismarine_slab",
+                 "minecraft:torch",
+                 "minecraft:wall_torch",
+                 "minecraft:oak_sapling",
+                 "minecraft:spruce_sapling",
+                 "minecraft:birch_sapling",
+                 "minecraft:jungle_sapling",
+                 "minecraft:acacia_sapling",
+                 "minecraft:dark_oak_sapling",
+                 "minecraft:powered_rail",
+                 "minecraft:detector_rail",
+                 "minecraft:snow",
+                 "minecraft:water",
+                 "minecraft:white_bed",
+                 "minecraft:orange_bed",
+                 "minecraft:magenta_bed",
+                 "minecraft:light_blue_bed",
+                 "minecraft:yellow_bed",
+                 "minecraft:lime_bed",
+                 "minecraft:pink_bed",
+                 "minecraft:gray_bed",
+                 "minecraft:light_gray_bed",
+                 "minecraft:cyan_bed",
+                 "minecraft:purple_bed",
+                 "minecraft:blue_bed",
+                 "minecraft:brown_bed",
+                 "minecraft:green_bed",
+                 "minecraft:red_bed",
+                 "minecraft:black_bed",
+                 "minecraft:cobblestone_wall",
+                 "minecraft:mossy_cobblestone_wall",
+                 "minecraft:oak_door",
+                 "minecraft:spruce_door",
+                 "minecraft:birch_door",
+                 "minecraft:jungle_door",
+                 "minecraft:acacia_door",
+                 "minecraft:dark_oak_door",
+                 "minecraft:vine",
+                 "minecraft:potted_oxeye_daisy",
+                 "minecraft:kelp_plant",
+                 "minecraft:lava" -> true;
             default -> false;
         };
     }
