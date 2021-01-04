@@ -28,6 +28,7 @@ public class Colors {
     public static final Color BIRCH_LEAVES = new Color(128, 167, 85, 255);
     public static final Color NETHERRACK = new Color(101, 40, 40, 255);
     public static final Color GLOWSTONE = new Color(136, 104, 57, 255);
+    public static final Color NETHER_PORTAL = new Color(58, 0, 169, 230);
 
     public static final Color OAK_LOG_OUTSIDE = new Color(109, 85, 50, 255);
     public static final Color OAK_LOG_INSIDE = new Color(169, 136, 82, 255);
@@ -49,14 +50,37 @@ public class Colors {
     public static final Color STRIPPED_ACACIA_OUTSIDE = new Color(174, 92, 59, 255);
     public static final Color STRIPPED_DARK_OAK_OUTSIDE = new Color(96, 76, 49, 255);
 
+    public static final Color SMOOTH_STONE_OUTSIDE = new Color(127, 127, 127, 255);
+    public static final Color SMOOTH_STONE_INSIDE = new Color(163, 163, 163, 255);
+    public static final Color IRON_BLOCK_OUTSIDE = new Color(209, 207, 207, 255);
+    public static final Color IRON_BLOCK_INSIDE = new Color(230, 230, 230, 255);
+    public static final Color GOLD_BLOCK_OUTSIDE = new Color(211, 150, 50, 255);
+    public static final Color GOLD_BLOCK_INSIDE = new Color(235, 236, 79, 255);
+
+    public static final Color FURNACE_CAGE = new Color(80, 78, 78, 255);
+    public static final Color FURNACE_SIDES = new Color(104, 104, 104, 255);
+    public static final Color FURNACE_LIGHT = new Color(176, 176, 176, 255);
+
     public static final Color SNOW = new Color(249, 255, 255, 255);
 
     public static final Color LAVA = new Color(207, 92, 20, 255);
     public static final Color WATER = new Color(63, 118, 228, 120);
+    public static final Color ICE = new Color(161, 195, 255, 200);
+    public static final Color BLUE_ICE = new Color(108, 163, 253, 200);
+    public static final Color PACKED_ICE = new Color(161, 195, 255, 255);
 
     public static final Color PUMPKIN = new Color(196, 115, 24, 255);
+    public static final Color CACTUS = new Color(57, 88, 26, 255);
+
+    public static final Color RED = new Color(143, 34, 34, 255);
+    public static final Color WHITE = new Color(255, 255, 255, 255);
 
     public static final Color COBBLE = new Color(127, 127, 127, 255);
+    public static final Color MOSS = new Color(110, 119, 95, 255);
+    public static final Color PRISMARINE = new Color(70, 137, 116, 255);
+    public static final Color DARK_PRISMARINE = new Color(49, 80, 65, 255);
+    public static final Color QUARTZ = new Color(221, 217, 203, 255);
+
     public static final Color OAK = new Color(162, 131, 79, 255);
     public static final Color SPRUCE = new Color(115, 85, 49, 255);
     public static final Color BIRCH= new Color(192, 175, 121, 255);

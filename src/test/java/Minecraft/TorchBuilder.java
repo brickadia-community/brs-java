@@ -19,12 +19,14 @@ public class TorchBuilder {
         base.setColor(BASE);
         base.setSize(2, 2, 8);
         base.setPosition(x, z, y - 8);
+        base.setCollision(false);
         bricks.add(base);
 
         Brick glow = new Brick();
         glow.setColor(GLOW);
         glow.setSize(2, 2, 1);
         glow.setPosition(x, z, y + 1);
+        glow.setCollision(false);
         bricks.add(glow);
 
         Brick flame = new Brick();
@@ -32,6 +34,7 @@ public class TorchBuilder {
         flame.setSize(2, 2, 1);
         flame.setPosition(x, z, y + 3);
         flame.setMaterialIndex(1);
+        flame.setCollision(false);
         bricks.add(flame);
 
         return bricks;

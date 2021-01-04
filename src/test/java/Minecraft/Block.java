@@ -125,6 +125,7 @@ public class Block {
             case "minecraft:mycelium" -> GrassBuilder.build(x, z, y, Colors.MYCELIUM);
             case "minecraft:gravel" -> CubeBuilder.build(x, z, y, Colors.GRAVEL);
             case "minecraft:sand" -> CubeBuilder.build(x, z, y, Colors.SAND);
+            case "minecraft:sandstone", "minecraft:chiseled_sandstone" -> SandstoneBuilder.build(x, z, y, Colors.SAND);
             case "minecraft:red_sand" -> CubeBuilder.build(x, z, y, Colors.RED_SAND);
             case "minecraft:clay" -> CubeBuilder.build(x, z, y, Colors.CLAY);
             case "minecraft:stone", "minecraft:infested_stone" -> CubeBuilder.build(x, z, y, Colors.STONE);
@@ -164,6 +165,12 @@ public class Block {
             case "minecraft:stripped_jungle_log" -> LogBuilder.build(x, z, y, Colors.JUNGLE_LOG_INSIDE, Colors.STRIPPED_JUNGLE_OUTSIDE, this);
             case "minecraft:stripped_acacia_log" -> LogBuilder.build(x, z, y, Colors.ACACIA_LOG_INSIDE, Colors.STRIPPED_ACACIA_OUTSIDE, this);
             case "minecraft:stripped_dark_oak_log" -> LogBuilder.build(x, z, y, Colors.DARK_OAK_LOG_INSIDE, Colors.STRIPPED_DARK_OAK_OUTSIDE, this);
+            case "minecraft:stripped_oak_wood" -> CubeBuilder.build(x, z, y, Colors.STRIPPED_OAK_OUTISDE);
+            case "minecraft:stripped_spruce_wood" -> CubeBuilder.build(x, z, y, Colors.STRIPPED_SPRUCE_OUTSIDE);
+            case "minecraft:stripped_birch_wood" -> CubeBuilder.build(x, z, y, Colors.STRIPPED_BIRCH_OUTSIDE);
+            case "minecraft:stripped_jungle_wood" -> CubeBuilder.build(x, z, y, Colors.STRIPPED_OAK_OUTISDE);
+            case "minecraft:stripped_acacia_wood" -> CubeBuilder.build(x, z, y, Colors.STRIPPED_ACACIA_OUTSIDE);
+            case "minecraft:stripped_dark_oak_wood" -> CubeBuilder.build(x, z, y, Colors.STRIPPED_DARK_OAK_OUTSIDE);
             case "minecraft:snow" -> CarpetBuilder.build(x, z, y, Colors.SNOW);
             case "minecraft:farmland" -> FarmlandBuilder.build(x, z, y, this);
             case "minecraft:crafting_table" -> CubeBuilder.build(x, z, y, new Color(129, 106, 70, 255));
@@ -198,6 +205,13 @@ public class Block {
             case "minecraft:jungle_fence" -> FenceBuilder.build(x, z, y, Colors.JUNGLE, this);
             case "minecraft:acacia_fence" -> FenceBuilder.build(x, z, y, Colors.ACACIA, this);
             case "minecraft:dark_oak_fence" -> FenceBuilder.build(x, z, y, Colors.DARK_OAK, this);
+            case "minecraft:oak_button" -> FenceBuilder.build(x, z, y, Colors.OAK, this);
+            case "minecraft:spruce_button" -> ButtonBuilder.build(x, z, y, Colors.SPRUCE, this);
+            case "minecraft:birch_button" -> ButtonBuilder.build(x, z, y, Colors.BIRCH, this);
+            case "minecraft:jungle_button" -> ButtonBuilder.build(x, z, y, Colors.JUNGLE, this);
+            case "minecraft:acacia_button" -> ButtonBuilder.build(x, z, y, Colors.ACACIA, this);
+            case "minecraft:dark_oak_button" -> ButtonBuilder.build(x, z, y, Colors.DARK_OAK, this);
+            case "minecraft:stone_button" -> ButtonBuilder.build(x, z, y, Colors.STONE, this);
             case "minecraft:oak_stairs" -> StairsBuilder.build(x, z, y, Colors.OAK, this);
             case "minecraft:spruce_stairs" -> StairsBuilder.build(x, z, y, Colors.SPRUCE, this);
             case "minecraft:birch_stairs" -> StairsBuilder.build(x, z, y, Colors.BIRCH, this);
@@ -205,6 +219,9 @@ public class Block {
             case "minecraft:acacia_stairs" -> StairsBuilder.build(x, z, y, Colors.ACACIA, this);
             case "minecraft:dark_oak_stairs" -> StairsBuilder.build(x, z, y, Colors.DARK_OAK, this);
             case "minecraft:cobblestone_stairs" -> StairsBuilder.build(x, z, y, Colors.COBBLE, this);
+            case "minecraft:stone_brick_stairs" -> StairsBuilder.build(x, z, y, Colors.STONE, this);
+            case "minecraft:mossy_stone_brick_stairs" -> StairsBuilder.build(x, z, y, Colors.MOSS, this);
+            case "minecraft:prismarine_brick_stairs" -> StairsBuilder.build(x, z, y, Colors.PRISMARINE, this);
             case "minecraft:chest" -> ChestBuilder.build(x, z, y, properties);
             case "minecraft:grindstone" -> GrindstoneBuilder.build(x, z, y, this);
             case "minecraft:glass_pane" -> PaneBuilder.build(x, z, y, this);
@@ -224,20 +241,29 @@ public class Block {
                  "minecraft:green_bed",
                  "minecraft:red_bed",
                  "minecraft:black_bed" -> BedBuilder.build(x, z, y, this);
-            case "minecraft:pumpkin" -> CubeBuilder.build(x, z, y, Colors.PUMPKIN);
-            case "minecraft:cobblestone_wall", "minecraft:mossy_cobblestone_wall" -> WallBuilder.build(x, z, y, this);
+            case "minecraft:pumpkin", "minecraft:carved_pumpkin" -> CubeBuilder.build(x, z, y, Colors.PUMPKIN);
+            case "minecraft:cobblestone_wall" -> WallBuilder.build(x, z, y, Colors.COBBLE, this);
+            case "minecraft:mossy_cobblestone_wall", "minecraft:mossy_stone_brick_wall" -> WallBuilder.build(x, z, y, Colors.MOSS, this);
+            case "minecraft:stone_brick_wall" -> WallBuilder.build(x, z, y, Colors.STONE, this);
+            case "minecraft:brick_wall" -> WallBuilder.build(x, z, y, Colors.BRICK, this);
+            case "minecraft:prismarine_wall" -> WallBuilder.build(x, z, y, Colors.PRISMARINE, this);
+            case "minecraft:nether_brick_wall" -> WallBuilder.build(x, z, y, Colors.NETHERRACK, this);
+            case "minecraft:andesite_wall" -> WallBuilder.build(x, z, y, Colors.ANDESITE, this);
+            case "minecraft:diorite_wall" -> WallBuilder.build(x, z, y, Colors.DIORITE, this);
+            case "minecraft:red_sandstone_wall" -> WallBuilder.build(x, z, y, Colors.RED_SAND, this);
             case "minecraft:torch" -> TorchBuilder.build(x, z, y);
             case "minecraft:spruce_trapdoor" -> TrapdoorBuilder.build(x, z, y, this);
             case "minecraft:wall_torch" -> WallTorchBuilder.build(x, z, y, this);
             case "minecraft:netherrack" -> CubeBuilder.build(x, z, y, Colors.NETHERRACK);
             case "minecraft:stone_bricks" -> BricksBuilder.build(x, z, y, Colors.STONE);
-            case "minecraft:mossy_stone_bricks" -> BricksBuilder.build(x, z, y, CobblestoneBuilder.MOSS);
+            case "minecraft:mossy_stone_bricks" -> BricksBuilder.build(x, z, y, Colors.MOSS);
             case "minecraft:glowstone" -> {
                 List<Brick> brick = CubeBuilder.build(x, z, y, Colors.GLOWSTONE);
                 brick.get(0).setMaterialIndex(1);
                 yield brick;
             }
-            case "minecraft:stone_slab" -> SlabBuilder.build(x, z, y, Colors.STONE, this);
+            case "minecraft:stone_slab", "minecraft:stone_brick_slab" -> SlabBuilder.build(x, z, y, Colors.STONE, this);
+            case "minecraft:cobblestone_slab" -> SlabBuilder.build(x, z, y, Colors.COBBLE, this);
             case "minecraft:sandstone_slab" -> SlabBuilder.build(x, z, y, Colors.SAND, this);
             case "minecraft:oak_slab" -> SlabBuilder.build(x, z, y, Colors.OAK, this);
             case "minecraft:spruce_slab" -> SlabBuilder.build(x, z, y, Colors.SPRUCE, this);
@@ -246,6 +272,39 @@ public class Block {
             case "minecraft:acacia_slab" -> SlabBuilder.build(x, z, y, Colors.ACACIA, this);
             case "minecraft:dark_oak_slab" -> SlabBuilder.build(x, z, y, Colors.DARK_OAK, this);
             case "minecraft:brick_slab" -> SlabBuilder.build(x, z, y, Colors.BRICK, this);
+            case "minecraft:quartz_slab" -> SlabBuilder.build(x, z, y, Colors.QUARTZ, this);
+            case "minecraft:stone_pressure_plate" -> PressurePlateBuilder.build(x, z, y, Colors.STONE);
+            case "minecraft:oak_pressure_plate" -> PressurePlateBuilder.build(x, z, y, Colors.OAK);
+            case "minecraft:spruce_pressure_plate" -> PressurePlateBuilder.build(x, z, y, Colors.SPRUCE);
+            case "minecraft:birch_pressure_plate" -> PressurePlateBuilder.build(x, z, y, Colors.BIRCH);
+            case "minecraft:jungle_pressure_plate" -> PressurePlateBuilder.build(x, z, y, Colors.JUNGLE);
+            case "minecraft:acacia_pressure_plate" -> PressurePlateBuilder.build(x, z, y, Colors.ACACIA);
+            case "minecraft:dark_oak_pressure_plate" -> PressurePlateBuilder.build(x, z, y, Colors.DARK_OAK);
+            case "minecraft:cactus" -> CactusBuilder.build(x, z, y);
+            case "minecraft:smooth_stone" -> SmoothBuilder.build(x, z, y, Colors.SMOOTH_STONE_OUTSIDE, Colors.SMOOTH_STONE_INSIDE);
+            case "minecraft:iron_block" -> SmoothBuilder.build(x, z, y, Colors.IRON_BLOCK_OUTSIDE, Colors.IRON_BLOCK_INSIDE);
+            case "minecraft:gold_block" -> SmoothBuilder.build(x, z, y, Colors.GOLD_BLOCK_OUTSIDE, Colors.GOLD_BLOCK_INSIDE);
+            case "minecraft:mossy_stone_brick_slab" -> SlabBuilder.build(x, z, y, Colors.MOSS, this);
+            case "minecraft:prismarine" -> CubeBuilder.build(x, z, y, Colors.PRISMARINE);
+            case "minecraft:dark_prismarine" -> CubeBuilder.build(x, z, y, Colors.DARK_PRISMARINE);
+            case "minecraft:ladder" -> LadderBuilder.build(x, z, y, this);
+            case "minecraft:ice" -> CubeBuilder.build(x, z, y, Colors.ICE);
+            case "minecraft:blue_ice" -> CubeBuilder.build(x, z, y, Colors.BLUE_ICE);
+            case "minecraft:packed_ice" -> CubeBuilder.build(x, z, y, Colors.PACKED_ICE);
+            case "minecraft:snow_block" -> CubeBuilder.build(x, z, y, Colors.SNOW);
+            case "minecraft:red_carpet" -> CarpetBuilder.build(x, z, y, Colors.RED);
+            case "minecraft:white_carpet" -> CarpetBuilder.build(x, z, y, Colors.WHITE);
+            case "minecraft:nether_portal" -> PortalBuilder.build(x, z, y, Colors.NETHER_PORTAL, this);
+            case "minecraft:wall_sign" -> WallSignBuilder.build(x, z, y, Colors.OAK, this);
+            case "minecraft:oak_wall_sign" -> WallSignBuilder.build(x, z, y, Colors.OAK, this);
+            case "minecraft:spruce_wall_sign" -> WallSignBuilder.build(x, z, y, Colors.SPRUCE, this);
+            case "minecraft:birch_wall_sign" -> WallSignBuilder.build(x, z, y, Colors.BIRCH, this);
+            case "minecraft:jungle_wall_sign" -> WallSignBuilder.build(x, z, y, Colors.JUNGLE, this);
+            case "minecraft:acacia_wall_sign" -> WallSignBuilder.build(x, z, y, Colors.ACACIA, this);
+            case "minecraft:dark_oak_wall_sign" -> WallSignBuilder.build(x, z, y, Colors.DARK_OAK, this);
+            case "minecraft:furnace" -> FurnaceBuilder.build(x, z, y, this);
+            case "minecraft:quartz_block" -> CubeBuilder.build(x, z, y, Colors.QUARTZ);
+            case "minecraft:prismarine_bricks" -> CubeBuilder.build(x, z, y, Colors.PRISMARINE);
             default -> {
                 unsupported.add(blockType);
                 yield List.of();
@@ -265,9 +324,15 @@ public class Block {
             case "minecraft:air",
                  "minecraft:cave_air",
                  "minecraft:void_air",
+                 "minecraft:lantern",
+                 "minecraft:sea_lantern",
+                 "minecraft:blue_ice",
+                 "minecraft:red_carpet",
+                 "minecraft:white_carpet",
                  "minecraft:glass",
                  "minecraft:grass",
                  "minecraft:grass_path",
+                 "minecraft:carrots",
                  "minecraft:tall_grass",
                  "minecraft:fern",
                  "minecraft:large_fern",
@@ -294,12 +359,25 @@ public class Block {
                  "minecraft:jungle_trapdoor",
                  "minecraft:acacia_trapdoor",
                  "minecraft:dark_oak_trapdoor",
+                 "minecraft:spruce_button",
+                 "minecraft:oak_button",
+                 "minecraft:birch_button",
+                 "minecraft:jungle_button",
+                 "minecraft:acacia_button",
+                 "minecraft:dark_oak_button",
+                 "minecraft:stone_button",
                  "minecraft:spruce_fence",
                  "minecraft:oak_fence",
                  "minecraft:birch_fence",
                  "minecraft:jungle_fence",
                  "minecraft:acacia_fence",
                  "minecraft:dark_oak_fence",
+                 "minecraft:spruce_fence_gate",
+                 "minecraft:oak_fence_gate",
+                 "minecraft:birch_fence_gate",
+                 "minecraft:jungle_fence_gate",
+                 "minecraft:acacia_fence_gate",
+                 "minecraft:dark_oak_fence_gate",
                  "minecraft:spruce_stairs",
                  "minecraft:oak_stairs",
                  "minecraft:birch_stairs",
@@ -326,11 +404,16 @@ public class Block {
                  "minecraft:sandstone_slab",
                  "minecraft:petrified_oak_slab",
                  "minecraft:cobblestone_slab",
+                 "minecraft:mossy_stone_brick_slab",
                  "minecraft:brick_slab",
                  "minecraft:rail",
+                 "minecraft:hopper",
                  "minecraft:stone_brick_slab",
                  "minecraft:nether_brick_slab",
                  "minecraft:quartz_slab",
+                 "minecraft:repeater",
+                 "minecraft:redstone_wire",
+                 "minecraft:white_wall_banner",
                  "minecraft:red_sandstone_slab",
                  "minecraft:purpur_slab",
                  "minecraft:prismarine_slab",
@@ -375,6 +458,26 @@ public class Block {
                  "minecraft:vine",
                  "minecraft:potted_oxeye_daisy",
                  "minecraft:kelp_plant",
+                 "minecraft:cactus",
+                 "minecraft:nether_portal",
+                 "minecraft:stone_pressure_plate",
+                 "minecraft:oak_pressure_plate",
+                 "minecraft:spruce_pressure_plate",
+                 "minecraft:birch_pressure_plate",
+                 "minecraft:jungle_pressure_plate",
+                 "minecraft:acacia_pressure_plate",
+                 "minecraft:dark_oak_pressure_plate",
+                 "minecraft:prismarine_brick_stairs",
+                 "minecraft:wall_sign",
+                 "minecraft:oak_wall_sign",
+                 "minecraft:spruce_wall_sign",
+                 "minecraft:birch_wall_sign",
+                 "minecraft:acacia_wall_sign",
+                 "minecraft:jungle_wall_sign",
+                 "minecraft:dark_oak_wall_sign",
+                 "minecraft:chain",
+                 "minecraft:bell",
+                 "minecraft:ice",
                  "minecraft:lava" -> true;
             default -> false;
         };

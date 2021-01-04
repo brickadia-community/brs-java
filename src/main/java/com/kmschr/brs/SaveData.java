@@ -39,7 +39,7 @@ public class SaveData {
     int brickCount;
 
     private static final List<String> SUPPORTED_MAPS = List.of("Plate", "Peaks", "Studio");
-    private static final List<String> DEFAULT_MATERIALS = List.of("BMC_Plastic", "BMC_Glow", "BMC_Metallic", "BMC_Hologram");
+    private static final List<String> DEFAULT_MATERIALS = List.of("BMC_Plastic", "BMC_Glow", "BMC_Metallic", "BMC_Hologram", "BMC_Ghost");
 
     public SaveData() {
         map = "Plate";

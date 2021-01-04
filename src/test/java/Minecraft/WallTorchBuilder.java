@@ -15,6 +15,7 @@ public class WallTorchBuilder {
         for (int i=0; i < 5; ++i) {
             Brick brick = new Brick();
             brick.setAssetNameIndex(1);
+            brick.setCollision(false);
             switch (facing) {
                 case NORTH -> brick.setDirection(Direction.XNegative);
                 case SOUTH -> brick.setDirection(Direction.XPositive);
@@ -79,6 +80,7 @@ public class WallTorchBuilder {
     private static Brick flame(int x, int z, int y, Facing facing) {
         Brick brick = new Brick();
         brick.setColor(TorchBuilder.FLAME);
+        brick.setCollision(false);
         brick.setMaterialIndex(1);
 
         int h = 8;

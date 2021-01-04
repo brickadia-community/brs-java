@@ -23,7 +23,7 @@ public class MinecraftExample {
         save.setDescription("Minecraft chunk");
         save.setBrickAssets(List.of("PB_DefaultMicroBrick", "PB_DefaultMicroWedge"));
 
-        readRegion("region/region/r.-1.0.mca", save, -1, 0);
+        readRegion("region/region/r.-1.0.mca", save, 0, 0);
 
         for (String block : Block.unsupported) {
             System.out.println(block);

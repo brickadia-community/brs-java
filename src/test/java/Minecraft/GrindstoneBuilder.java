@@ -43,6 +43,10 @@ public class GrindstoneBuilder {
                 pivotBearingL.setPosition(x, z - 5*2, y + 4);
                 pivotBearingR.setSize(6, 2, 6);
                 pivotBearingR.setPosition(x, z + 5*2, y + 4);
+                legL.setSize(4, 2, 6);
+                legL.setPosition(x, z - 10, y - 8);
+                legR.setSize(4, 2, 6);
+                legR.setPosition(x, z + 10, y - 8);
             }
         }
         bricks.add(stone);
