@@ -23,14 +23,22 @@ public class MinecraftExample {
         save.setDescription("Minecraft chunk");
         save.setBrickAssets(List.of("PB_DefaultMicroBrick", "PB_DefaultMicroWedge"));
 
-        readRegion("region/region/r.-1.0.mca", save, 0, 0);
+        readRegion("region/r.0.0.mca", save, 0, 0);
+        readRegion("region/r.0.-1.mca", save, 0, -1);
+        readRegion("region/r.-1.0.mca", save, -1, 0);
+        readRegion("region/r.-1.-1.mca", save, -1, -1);
+        readRegion("region/r.0.1.mca", save, 0, 1);
+        readRegion("region/r.1.1.mca", save, 1, 1);
+        readRegion("region/r.1.0.mca", save, 1, 0);
+        readRegion("region/r.1.-1.mca", save, 1, -1);
+        readRegion("region/r.-1.1.mca", save, -1, 1);
 
         for (String block : Block.unsupported) {
             System.out.println(block);
         }
 
         System.out.println("Writing " + save.getBricks().size() + " bricks");
-        BRS.writeSave("minecraft.brs", save);
+        BRS.writeSave("C:\\Users\\Kevin\\AppData\\Local\\Brickadia\\Saved\\Builds\\minecraft.brs", save);
     }
 
     void readRegion(String filename, SaveData save, int rx, int ry) throws IOException {
@@ -58,9 +66,10 @@ public class MinecraftExample {
                     if (blocks[x][y][z] == null || blocks[x][y][z].isAir())
                         continue;
 
+                    /*
                     // remove bottom bedrock
                     if ((y == 0 || y == 1) && !(x == 0 || z == 0 || x == REGION_SIZE * CHUNK_WIDTH - 1 || z == REGION_SIZE * CHUNK_WIDTH - 1))
-                        continue;
+                        continue;*/
 
                     // Don't make bricks for blocks that are completely surrounded
                     if (x != 0 && x != (32 * 16) - 1 && y != 0 && y != 255 && z != 0 && z != (32 * 16) - 1) {
@@ -78,8 +87,9 @@ public class MinecraftExample {
                                 surrounded = false;
                                 break;
                             }
-                        if (surrounded)
+                        if (surrounded) {
                             continue;
+                        }
                     }
 
                     save.getBricks().addAll(blocks[x][y][z].getBricks(x, z, y, rx, ry, mcaFile, blocks));

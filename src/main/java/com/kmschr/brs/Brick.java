@@ -17,6 +17,10 @@ public class Brick {
 
     public Brick() {}
 
+    public Brick(ColorMode color) {
+        this.color = color;
+    }
+
     public String toString() {
         return "Asset Name Index: " + assetNameIndex + '\n' +
                 "Size: " + size + '\n' +
@@ -56,6 +60,12 @@ public class Brick {
 
     public void setPosition(Vec3 position) {
         this.position = position;
+    }
+
+    public void shift(int x, int y, int z) {
+        position.x += x;
+        position.y += y;
+        position.z += z;
     }
 
     public void setPosition(int x, int y, int z) {

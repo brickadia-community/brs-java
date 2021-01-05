@@ -7,7 +7,9 @@ public enum Facing {
     NORTH,
     SOUTH,
     EAST,
-    WEST;
+    WEST,
+    UP,
+    DOWN;
 
     public static Facing fromProps(CompoundTag properties) {
         String facing = ((StringTag) properties.get("facing")).getValue();
@@ -16,6 +18,8 @@ public enum Facing {
             case "south" -> SOUTH;
             case "east" -> EAST;
             case "west" -> WEST;
+            case "up" -> UP;
+            case "down" -> DOWN;
             default -> throw new IllegalStateException("Unexpected value: " + facing);
         };
     }

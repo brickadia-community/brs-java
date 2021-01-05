@@ -8,8 +8,8 @@ import java.util.List;
 public class LiquidBuilder {
 
     public static List<Brick> build(int rx, int rz, int ry, int regX, int regY, Color color, Block block, Block[][][] blocks) {
-        int x = rx * 16 * 2 + regX * 32 * 16;
-        int z = rz * 16 * 2 + regY * 32 * 16;
+        int x = rx * 16 * 2 + regX * 32 * 16 * 32;
+        int z = rz * 16 * 2 + regY * 32 * 16 * 32;
         int y = ry * 16 * 2 + 16;
 
         boolean top = true;

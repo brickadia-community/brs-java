@@ -19,7 +19,7 @@ public class FurnaceBuilder {
         return bricks;
     }
 
-    public static List<Brick> sides(int x, int z, int y, Facing facing) {
+    public static List<Brick> sides(int x, int z, int y, Facing facing, boolean cull) {
         List<Brick> bricks = new ArrayList<>();
         for (int i=0; i < 4; ++i) {
             Brick bot = new Brick();
@@ -49,6 +49,9 @@ public class FurnaceBuilder {
         bricks.get(5).setPosition(x, z + 15, y + 6);
         bricks.get(6).setPosition(x - 15, z, y + 6);
         bricks.get(7).setPosition(x + 15, z, y + 6);
+
+        if (!cull)
+            return bricks;
 
         switch (facing) {
             case SOUTH -> {
@@ -92,6 +95,104 @@ public class FurnaceBuilder {
         }
         bricks.add(bar);
 
+        Brick black = new Brick();
+        black.setColor(Colors.FURNACE_DARK);
+        switch (facing) {
+            case NORTH, SOUTH -> {
+                int off = 13 * (facing == Facing.SOUTH ? 1 : -1);
+                black.setSize(14, 1, 14);
+                black.setPosition(x, z + off, y);
+            }
+            case WEST, EAST -> {
+                int off = 13 * (facing == Facing.EAST ? 1 : -1);
+                black.setSize(1, 14, 14);
+                black.setPosition(x + off, z, y);
+            }
+        }
+        bricks.add(black);
+
+        Brick top = new Brick();
+        Brick top_sideL = new Brick();
+        Brick top_sideR = new Brick();
+        Brick topBot = new Brick();
+        Brick topCornL = new Brick();
+        Brick topCornR = new Brick();
+        Brick bot = new Brick();
+        Brick botLeft = new Brick();
+        Brick botRight = new Brick();
+        Brick botCornL = new Brick();
+        Brick botCornR = new Brick();
+        top.setColor(Colors.FURNACE_SIDES);
+        top_sideL.setColor(Colors.FURNACE_SIDES);
+        top_sideR.setColor(Colors.FURNACE_SIDES);
+        topBot.setColor(Colors.FURNACE_SIDES);
+        topCornL.setColor(Colors.FURNACE_SIDES);
+        topCornR.setColor(Colors.FURNACE_SIDES);
+        bot.setColor(Colors.FURNACE_LIGHT);
+        botLeft.setColor(Colors.FURNACE_LIGHT);
+        botRight.setColor(Colors.FURNACE_LIGHT);
+        botCornL.setColor(Colors.FURNACE_LIGHT);
+        botCornR.setColor(Colors.FURNACE_LIGHT);
+        topCornL.setSize(1, 1, 1);
+        topCornR.setSize(1, 1, 1);
+        botCornL.setSize(1, 1, 1);
+        botCornR.setSize(1, 1, 1);
+        switch (facing) {
+            case NORTH, SOUTH -> {
+                int off = 15 * (facing == Facing.SOUTH ? 1 : -1);
+                top.setSize(14, 1, 2);
+                top.setPosition(x, z + off, y + 12);
+                top_sideL.setSize(2, 1, 4);
+                top_sideL.setPosition(x - 12, z + off, y + 6);
+                top_sideR.setSize(2, 1, 4);
+                top_sideR.setPosition(x + 12, z + off, y + 6);
+                topBot.setSize(14, 1, 1);
+                topBot.setPosition(x, z + off, y + 1);
+                topCornL.setPosition(x - 9, z + off, y + 9);
+                topCornR.setPosition(x + 9, z + off, y + 9);
+                bot.setSize(14, 1, 2);
+                bot.setPosition(x, z + off, y - 4);
+                botLeft.setSize(2, 1, 4);
+                botLeft.setPosition(x - 12, z + off, y - 10);
+                botRight.setSize(2, 1, 4);
+                botRight.setPosition(x + 12, z + off, y - 10);
+                botCornL.setPosition(x - 9, z + off, y - 7);
+                botCornR.setPosition(x + 9, z + off, y - 7);
+            }
+            case WEST, EAST -> {
+                int off = 15 * (facing == Facing.EAST ? 1 : -1);
+                top.setSize(1, 14, 2);
+                top.setPosition(x + off, z, y + 12);
+                top_sideL.setSize(1, 2, 4);
+                top_sideL.setPosition(x + off, z - 12, y + 6);
+                top_sideR.setSize(1, 2, 4);
+                top_sideR.setPosition(x + off, z + 12, y + 6);
+                topBot.setSize(1, 14, 1);
+                topBot.setPosition(x + off, z, y + 1);
+                topCornL.setPosition(x + off, z - 9, y + 9);
+                topCornR.setPosition(x + off, z + 9, y + 9);
+                bot.setSize(1, 14, 2);
+                bot.setPosition(x + off, z, y - 4);
+                botLeft.setSize(1, 2, 4);
+                botLeft.setPosition(x + off, z - 12, y - 10);
+                botRight.setSize(1, 2, 4);
+                botRight.setPosition(x + off, z + 12, y - 10);
+                botCornL.setPosition(x + off, z - 9, y - 7);
+                botCornR.setPosition(x + off, z + 9, y - 7);
+            }
+        }
+        bricks.add(top);
+        bricks.add(top_sideL);
+        bricks.add(top_sideR);
+        bricks.add(topBot);
+        bricks.add(topCornL);
+        bricks.add(topCornR);
+        bricks.add(bot);
+        bricks.add(botLeft);
+        bricks.add(botRight);
+        bricks.add(botCornL);
+        bricks.add(botCornR);
+
         return bricks;
     }
 
@@ -99,7 +200,7 @@ public class FurnaceBuilder {
         Facing facing = Facing.fromProps(block.getProps());
         List<Brick> bricks = CageBuilder.build(x, z, y, Colors.FURNACE_CAGE);
         bricks.addAll(topbot(x, z, y));
-        bricks.addAll(sides(x, z, y, facing));
+        bricks.addAll(sides(x, z, y, facing, true));
         bricks.addAll(front(x, z, y, facing));
         return bricks;
     }
